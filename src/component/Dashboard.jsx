@@ -22,7 +22,7 @@ const Dashboard = () => {
   return (
       <>
           {/* header part */}
-    <div className="bg-white text-gray-900 min-h-screen">
+    <div className="bg-white text-gray-900 min-h-screen ">
       <header className="bg-gradient-to-r from-blue-500 to-teal-500 py-6">
         <div className="max-w-screen-xl mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold text-white">Clinic Name</h1>
@@ -30,7 +30,7 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Doctors Section */}
+      {/* Doctors Section */}   
       <section className="py-12 bg-gray-100">
         <div className="max-w-screen-xl mx-auto px-4">
           <h2 className="text-3xl font-semibold text-center mb-8">Our Doctors</h2>
@@ -82,7 +82,7 @@ const Dashboard = () => {
           {qrValue && (
             <div className="mt-6 flex flex-col items-center justify-center">
               <p className="mb-2 font-semibold text-center">Your Appointment QR Code:</p>
-              <QRCode value={qrValue} size={150} />
+              <QRCode value={qrValue} size={120} />
             </div>
           )}
 
@@ -94,8 +94,8 @@ const Dashboard = () => {
         <div className="max-w-screen-md mx-auto px-4">
           <h2 className="text-2xl font-semibold mb-6 text-center">Appointments</h2>
           <ul className="space-y-4">
-            {appointments.map((apt, idx) => (
-              <li key={idx} className="bg-white p-4 rounded shadow flex justify-between items-center">
+            {appointments.map((apt, id) => (
+              <li key={id} className="bg-white p-4 rounded shadow flex justify-between items-center">
                 <div>
                   <p><strong>{apt.name}</strong> with {apt.doctor}</p>
                   <p className="text-gray-600">{apt.email} | {apt.date}</p>
@@ -111,7 +111,8 @@ const Dashboard = () => {
       </footer>
     </div>
       </>
-  )
+  )     
+  
 }
 
 export default Dashboard
