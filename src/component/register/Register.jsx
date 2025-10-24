@@ -51,7 +51,7 @@ const Register = () => {
                       </Link>
 
                        {/* multi-doc for */}
-                       <Link to={'/'}>
+                       <Link to={'/multiple-center'}>
                     <div className="border border-gray-300 p-4 rounded w-full bg-white shadow-sm hover:shadow-md transition mb-4">
                         <div className="flex items-center gap-4">
                             <h1 className="text-5xl">🏥</h1>
@@ -64,7 +64,8 @@ const Register = () => {
                       </Link>
 
                        {/* this is for Group admin */}
-                       <Link to={'/'}>
+             
+                       <Link to={'/groupAdminDoc'}>
                     <div className="border border-gray-300 p-4 rounded w-full bg-white shadow-sm hover:shadow-md transition mb-4">
                         <div className="flex items-center gap-4">
                             <h1 className="text-5xl">👨‍⚕️</h1>

@@ -1,6 +1,6 @@
 
 
- import React, { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PatientRegisterStep2 = () => {
@@ -51,6 +51,9 @@ const PatientRegisterStep2 = () => {
     // Navigate to Step 3
     navigate("/patientRegister3");
   };
+
+  const step2Data = { medicalConditions, allergies, medications, emergencyName, emergencyPhone };
+  localStorage.setItem("patientStep2", JSON.stringify(step2Data));
 
   return (
     <div className="bg-gray-100 min-h-screen py-8">

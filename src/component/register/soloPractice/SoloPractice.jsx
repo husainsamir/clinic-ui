@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SoloPractice = () => {
   const [selectedAvatar, setSelectedAvatar] = useState("");
@@ -12,25 +12,29 @@ const SoloPractice = () => {
   const [error, setError] = useState("");
 
   const avatars = ["👨‍⚕️", "👩‍⚕️", "🧑‍⚕️", "👨‍🔬", "👩‍🔬"];
-  const navigate= useNavigate()
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (
-      !selectedAvatar ||
-      !fullName ||
-      !email ||
-      !phone ||
-      !specialty ||
-      !license ||
-      !password
-    ) {
+      
+    // Validate all fields
+    if (!selectedAvatar || !fullName || !email || !phone || !specialty || !license || !password) {
       setError("Please fill all fields and choose an avatar");
       return;
     }
 
-    setError("");
-    console.log("Doctor Registered:", {
+    // Get existing doctors
+    const existingDoctors = JSON.parse(localStorage.getItem("soloDoctors")) || [];
+
+    // Check duplicate email
+    const emailExists = existingDoctors.some((doc) => doc.email === email);
+    if (emailExists) {
+      setError("Email already registered. Please use another email or login.");
+      return;
+    }
+
+    // Create new doctor object
+    const newDoctor = {
       avatar: selectedAvatar,
       fullName,
       email,
@@ -38,14 +42,28 @@ const SoloPractice = () => {
       specialty,
       license,
       password,
-    });
+    };
 
+    // Save in localStorage
+    const updatedDoctors = [...existingDoctors, newDoctor];
+    localStorage.setItem("soloDoctors", JSON.stringify(updatedDoctors));
+
+    // Clear error
+    setError("");
+
+    // Navigate to dashboard after small delay (to avoid alert blocking)
     alert("Doctor registration successful!");
-    navigate('/solodocDash')
+     navigate("/solodocDash")
   };
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center py-10 px-4">
+         <button
+        onClick={() => navigate(-1)} // goes back to previous page
+        className="absolute top-6 left-6 bg-blue-100 text-blue-700 px-4 py-2 rounded hover:bg-blue-200 transition"
+      >
+        ← Back
+      </button>
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
           Solo Practice Doctor Registration
@@ -61,11 +79,10 @@ const SoloPractice = () => {
                 type="button"
                 onClick={() => setSelectedAvatar(icon)}
                 className={`text-4xl p-3 rounded-full transition-all duration-200 
-                ${
-                  selectedAvatar === icon
+                  ${selectedAvatar === icon
                     ? "ring-4 ring-blue-500 bg-blue-100 scale-110"
                     : "hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 {icon}
               </button>
@@ -79,8 +96,11 @@ const SoloPractice = () => {
           )}
         </div>
 
+        {/* Error message */}
         {error && (
-          <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">{error}</div>
+          <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">
+            {error}
+          </div>
         )}
 
         {/* Registration form */}
@@ -147,6 +167,12 @@ const SoloPractice = () => {
             Complete Registration
           </button>
         </form>
+
+        <div className="text-center mt-2">
+          <Link to="/soloLogin" className="text-blue-600 hover:underline">
+            Login
+          </Link>
+        </div>
       </div>
     </div>
   );

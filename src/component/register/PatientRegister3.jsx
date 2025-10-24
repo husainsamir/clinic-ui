@@ -1,6 +1,4 @@
-
-
-  import React, { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PatientRegister3 = () => {
@@ -15,10 +13,18 @@ const PatientRegister3 = () => {
       return;
     }
 
-    // TODO: Call API to complete registration with avatar
-    console.log("Selected Avatar:", selectedAvatar);
+    const step1 = JSON.parse(localStorage.getItem("patientStep1"));
+    const step2 = JSON.parse(localStorage.getItem("patientStep2"));
+
+    const fullData = { ...step1, ...step2, avatar: selectedAvatar };
+
+    console.log("✅ Final Patient Data:", fullData);
+
+    // ✅ Save all data for Dashboard
+    localStorage.setItem("patientData", JSON.stringify(fullData));
+
     alert("Registration Completed!");
-    navigate("/patientDash"); // redirect to login or dashboard
+    navigate("/patientDash");
   };
 
   return (
@@ -37,7 +43,9 @@ const PatientRegister3 = () => {
               <div
                 key={index}
                 className={`cursor-pointer p-4 border rounded transition hover:bg-blue-100 ${
-                  selectedAvatar === avatar ? "border-blue-600 bg-blue-200" : "border-gray-300"
+                  selectedAvatar === avatar
+                    ? "border-blue-600 bg-blue-200"
+                    : "border-gray-300"
                 }`}
                 onClick={() => setSelectedAvatar(avatar)}
               >
